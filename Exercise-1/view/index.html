@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+}
+</style>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-app="myApp" ng-controller="clientesCtrl">
+
+	<table style="width:100%">
+		<tr>
+			<th>Codigo</th>
+			<th>Nome</th>
+			<th>Data de Nascimento</th>
+		</tr>
+		<tr ng-repeat="x in clientes">
+			<th>{{x.codigo}}</th>
+			<th>{{x.nome}}</th>
+			<th>{{x.dataNascimento}}</th>	
+		</tr>
+	</table>
+
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('clientesCtrl', function($scope, $http) {
+	$http.get("/clientes").then(function (response) {
+		var json = response.data;
+		$scope.clientes = json;	
+	}, function(response) {
+        //Second function handles error
+        $scope.clientes = "Erro durante a execucao do script";
+    });
+});
+</script>
+
+</body>
+</html>
